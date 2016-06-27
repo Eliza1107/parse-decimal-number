@@ -1,16 +1,29 @@
 (function() {
-  var options, patterns;
+  var findSeparatorsByCountry, fs, options, patterns,
+    indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
+
+  fs = require('fs');
 
   patterns = [];
 
   options = {};
 
   module.exports = function(value, inOptions, enforceGroupSize) {
-    var decimal, fractionPart, integerPart, number, pattern, patternIndex, result, thousands;
+    var decimal, fractionPart, integerPart, number, pattern, patternIndex, result, separators, thousands;
     if (enforceGroupSize == null) {
       enforceGroupSize = true;
     }
-    if (typeof inOptions === 'string') {
+    if (typeof inOptions === 'string' && inOptions.match(/\w+/)) {
+      separators = findSeparatorsByCountry(inOptions);
+      if (separators === '') {
+        throw {
+          name: 'ArgumentException',
+          message: 'The format for area code is incorrect.'
+        };
+      }
+      thousands = separators[0];
+      decimal = separators[1];
+    } else if (typeof inOptions === 'string') {
       if (inOptions.length !== 2) {
         throw {
           name: 'ArgumentException',
@@ -49,6 +62,21 @@
     fractionPart = result[2];
     number = parseFloat(integerPart + "." + fractionPart);
     return number;
+  };
+
+  findSeparatorsByCountry = function(code) {
+    var data, jsonFile, key, sep, value;
+    jsonFile = fs.readFileSync("./dist/locales.json", "utf8");
+    data = JSON.parse(jsonFile);
+    sep = '';
+    for (key in data) {
+      value = data[key];
+      if (indexOf.call(value, code) >= 0) {
+        sep = key;
+        break;
+      }
+    }
+    return sep;
   };
 
   module.exports.setOptions = function(newOptions) {

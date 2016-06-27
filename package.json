@@ -1,6 +1,6 @@
 {
   "name": "parse-decimal-number",
-  "version": "0.1.1",
+  "version": "0.2.1",
   "description": "Parse a decimal number with i18n format support (localized decimal points and thousands separators)",
   "main": "./dist/parse-decimal-number.js",
   "scripts": {
@@ -41,6 +41,7 @@
     "gulp": "^3.9.1",
     "gulp-blanket-mocha": "0.0.4",
     "gulp-coffee": "^2.2.0",
+    "gulp-connect": "^4.1.0",
     "gulp-coveralls": "^0.1.4",
     "gulp-istanbul": "^0.3.1",
     "gulp-mocha": "^1.1.0",

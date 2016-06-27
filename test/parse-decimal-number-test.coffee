@@ -78,9 +78,10 @@ describe 'parse-decimal-number',->
   it 'accepts a two-character string as options argument', ->
     assert.strictEqual parseDecimalNumber('123,456.78', ',.'), 123456.78
 
-  it 'throws an error if a string with a length other than two is used as options argument', ->
+  it 'throws an error if a non-locale string with a length other than two is used as options argument', ->
     assert.throws -> parseDecimalNumber('123,456.78', 'ABC')
     assert.throws -> parseDecimalNumber('123,456.78', 'D')
+
 
   it 'accepts a two-element array as options', ->
     assert.strictEqual parseDecimalNumber('123,456.78', [',','.']), 123456.78
@@ -94,3 +95,25 @@ describe 'parse-decimal-number',->
   it 'throws an error if an array with a length other than two is used as options argument', ->
     assert.throws -> parseDecimalNumber('123,456.78', [',','.','#'])
     assert.throws -> parseDecimalNumber('123,456.78', [','])
+
+  it 'correctly parses decimal formats with 2-digit-locale-code options',->
+    assert.strictEqual parseDecimalNumber('12 345 677,89', 'af'), 12345677.89
+    assert.strictEqual parseDecimalNumber("12'345'678.9", 'rm'), 12345678.9
+    assert.strictEqual parseDecimalNumber('12,345,679', 'zh'), 12345679
+
+  it 'correctly parses decimal formats with 3-digit-locale-code options',->
+    assert.strictEqual parseDecimalNumber('12 345 677,89', 'bas'), 12345677.89
+
+
+  it 'correctly parses decimal formats with 4-digit-locale-code options',->
+    assert.strictEqual parseDecimalNumber('12 345 678,9', 'enZA'), 12345678.9
+    assert.strictEqual parseDecimalNumber("12’345’677.89", 'deCH'), 12345677.89
+    assert.strictEqual parseDecimalNumber('12,345,679', 'afNA'), 12345679
+
+  it 'correctly parses decimal formats with more-than-4-digit-locale-code options',->
+    assert.strictEqual parseDecimalNumber('12,345,678.9', 'caVALENCIA'), 12345678.9
+
+  it 'return NaN if the decimal format does not match the parsing rule', ->
+    assert.strictEqual _.isNaN(parseDecimalNumber('123,456.78', '.,')), true
+    assert.strictEqual _.isNaN(parseDecimalNumber('123,456.78', ['.',','])), true
+    assert.strictEqual _.isNaN(parseDecimalNumber('123,456.78', 'de')), true

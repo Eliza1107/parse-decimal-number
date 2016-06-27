@@ -7,6 +7,7 @@ mocha     = require 'gulp-mocha'
 path      = require 'path'
 uglify    = require 'gulp-uglifyjs'
 verb      = require 'gulp-verb'
+# exec      = require 'child_process'.exec;
 
 destDir = path.dirname require('./package.json').main
 
@@ -15,7 +16,7 @@ gulp.task 'docs', ->
     .pipe verb dest:'README.md'
     .pipe gulp.dest './'
 
-gulp.task 'test', ['compile'], ->
+gulp.task 'test', ['getLocales'], ->
   gulp.src './dist/*.js'
   .pipe istanbul()
   .on 'finish',->
@@ -36,4 +37,9 @@ gulp.task 'compile',->
     .pipe uglify(path.basename(require('./package.json').main).replace('.js','.min.js'))
     .pipe gulp.dest destDir
 
-gulp.task 'default', ['compile','test', 'coveralls', 'docs']
+gulp.task 'getLocales', ['compile'], ->
+  require('child_process').exec('node ./dist/locales.js', (err, stdout, stderr) ->
+    console.log(stderr)
+  )
+
+gulp.task 'default', ['compile', 'getLocales', 'test', 'coveralls', 'docs']
