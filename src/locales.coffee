@@ -24,4 +24,4 @@ createLocaleJson= (filename) ->
     if err
       return console.log(err)
   )
-  createLocaleJson('./locale/final_data.txt')
+  createLocaleJson('../locale/final_data.txt')

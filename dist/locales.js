@@ -40,7 +40,7 @@
         return console.log(err);
       }
     });
-    return createLocaleJson('./locale/final_data.txt');
+    return createLocaleJson('../locale/final_data.txt');
   };
 
 }).call(this);
