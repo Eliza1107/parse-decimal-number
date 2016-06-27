@@ -125,7 +125,6 @@ To keep this project as small and modular as possible, the locale data itself ha
 * [Wikipedia](http://en.wikipedia.org/wiki/Decimal_mark#Examples_of_use)
 
 "Locale" data was obtained from unicode.org:
-COPYRIGHT AND PERMISSION NOTICE
 
 Copyright © 1991-2016 Unicode, Inc. All rights reserved.
 Distributed under the Terms of Use in http://www.unicode.org/copyright.html.
@@ -141,9 +140,9 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 ## Author
 
 **Andreas Pizsa (http://github.com/AndreasPizsa)**
- 
+
 + [github/AndreasPizsa](https://github.com/AndreasPizsa)
-+ [twitter/AndreasPizsa](http://twitter.com/AndreasPizsa) 
++ [twitter/AndreasPizsa](http://twitter.com/AndreasPizsa)
 
 ## License
 Copyright (c) 2016 Andreas Pizsa (http://github.com/AndreasPizsa), contributors.  
