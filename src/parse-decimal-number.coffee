@@ -1,4 +1,4 @@
-fs = require 'fs'
+localesJSON = require './locales.json'
 
 patterns=[]
 options ={}
@@ -38,14 +38,10 @@ module.exports = (value,inOptions,enforceGroupSize=true)->
   return number
 
 findSeparatorsByCountry = (code) ->
-  jsonFile = fs.readFileSync("./dist/locales.json", "utf8")
-  data = JSON.parse(jsonFile)
-  sep = ''
-  for key, value of data
+  for key, value of localesJSON
     if code in value
-      sep = key
-      break
-  return sep
+      return key
+  return ''
 
 
 

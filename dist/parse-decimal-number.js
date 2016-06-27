@@ -1,8 +1,8 @@
 (function() {
-  var findSeparatorsByCountry, fs, options, patterns,
+  var findSeparatorsByCountry, localesJSON, options, patterns,
     indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
-  fs = require('fs');
+  localesJSON = require('./locales.json');
 
   patterns = [];
 
@@ -65,18 +65,14 @@
   };
 
   findSeparatorsByCountry = function(code) {
-    var data, jsonFile, key, sep, value;
-    jsonFile = fs.readFileSync("./dist/locales.json", "utf8");
-    data = JSON.parse(jsonFile);
-    sep = '';
-    for (key in data) {
-      value = data[key];
+    var key, value;
+    for (key in localesJSON) {
+      value = localesJSON[key];
       if (indexOf.call(value, code) >= 0) {
-        sep = key;
-        break;
+        return key;
       }
     }
-    return sep;
+    return '';
   };
 
   module.exports.setOptions = function(newOptions) {
