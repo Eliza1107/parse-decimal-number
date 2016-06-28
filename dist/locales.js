@@ -1,10 +1,10 @@
 (function() {
-  var createLocaleJson, fs,
+  var fs,
     indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   fs = require('fs');
 
-  createLocaleJson = function(filename) {
+  module.exports = function(filename) {
     var code, codeSplit, file, i, jsonString, len, len1, line, lines, readline, sep, separatorsDict;
     readline = require('readline');
     fs = require('fs');
@@ -35,12 +35,11 @@
       }
     }
     jsonString = JSON.stringify(separatorsDict);
-    fs.writeFile("./dist/locales.json", jsonString, function(err) {
+    return fs.writeFile("./dist/locales.json", jsonString, function(err) {
       if (err) {
         return console.log(err);
       }
     });
-    return createLocaleJson('../locale/final_data.txt');
   };
 
 }).call(this);

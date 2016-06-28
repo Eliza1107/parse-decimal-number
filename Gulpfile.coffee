@@ -7,6 +7,8 @@ mocha     = require 'gulp-mocha'
 path      = require 'path'
 uglify    = require 'gulp-uglifyjs'
 verb      = require 'gulp-verb'
+watch     = require 'gulp-watch'
+
 # exec      = require 'child_process'.exec;
 
 destDir = path.dirname require('./package.json').main
@@ -38,8 +40,7 @@ gulp.task 'compile',->
     .pipe gulp.dest destDir
 
 gulp.task 'getLocales', ['compile'], ->
-  require('child_process').exec('node ./dist/locales.js', (err, stdout, stderr) ->
-    console.log(stderr)
-  )
+  createLocaleJson = require './dist/locales.js'
+  createLocaleJson('./locale/final_data.txt')
 
 gulp.task 'default', ['compile', 'getLocales', 'test', 'coveralls', 'docs']

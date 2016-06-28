@@ -1,6 +1,8 @@
 fs = require 'fs'
 
-createLocaleJson= (filename) ->
+# createLocaleJson= (filename) ->
+module.exports = (filename)->
+
   #assuming the filename is a .txt file
   readline = require 'readline'
   fs = require 'fs'
@@ -24,4 +26,4 @@ createLocaleJson= (filename) ->
     if err
       return console.log(err)
   )
-  createLocaleJson('../locale/final_data.txt')
+  # createLocaleJson('../locale/final_data.txt')
