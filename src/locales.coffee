@@ -26,4 +26,3 @@ module.exports = (filename)->
     if err
       return console.log(err)
   )
-  # createLocaleJson('../locale/final_data.txt')
